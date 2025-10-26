@@ -13,7 +13,7 @@ import json
 import time
 from typing import List, Dict, Any, Optional, Callable
 from datetime import datetime
-from linkedin_candidate_finder import LinkedInCandidateFinder, SearchCriteria, EnrichmentConfig
+from app.core.finder import LinkedInCandidateFinder, SearchCriteria, EnrichmentConfig
 
 
 class CandidateExporter:

@@ -11,9 +11,6 @@ aiofiles>=23.2.1
 pydantic>=2.5.0
 pydantic-settings>=2.1.0
 
-# CORS
-python-cors>=1.0.0
-
 # Existing dependencies (from your candidate finder)
 exa_py>=1.0.0
 python-dotenv>=1.0.0

@@ -130,22 +130,27 @@ class SearchService:
         candidates = []
 
         for item in results:
-            # Extract verification results
-            verification = None
-            if "verification" in item and item["verification"]:
-                criteria_results = [
-                    CriteriaResult(
-                        description=cr.get("description", ""),
-                        passed=cr.get("passed", False),
-                        reasoning=cr.get("reasoning", ""),
-                        references=cr.get("references", [])
+            try:
+                # Extract verification results with safe dictionary access
+                verification = None
+                verification_data = item.get("verification")
+                if verification_data:
+                    criteria_results = [
+                        CriteriaResult(
+                            description=cr.get("description", ""),
+                            passed=cr.get("passed", False),
+                            reasoning=cr.get("reasoning", ""),
+                            references=cr.get("references", [])
+                        )
+                        for cr in verification_data.get("criteria_results", [])
+                    ]
+                    verification = VerificationResult(
+                        passed=verification_data.get("passed", False),
+                        criteria_results=criteria_results
                     )
-                    for cr in item["verification"].get("criteria_results", [])
-                ]
-                verification = VerificationResult(
-                    passed=item["verification"].get("passed", False),
-                    criteria_results=criteria_results
-                )
+            except Exception as e:
+                print(f"Warning: Failed to extract verification for candidate: {str(e)}")
+                verification = None
 
             # Extract properties
             props = item.get("properties", {})
